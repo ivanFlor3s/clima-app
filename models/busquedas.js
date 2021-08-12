@@ -14,6 +14,14 @@ class Busquedas{
         }
     }
 
+    get paramsOpenWeather(){
+        return {
+            appid: process.env.OPENWEATHER_KEY,
+            units:'metric',
+            lang: 'es'
+        }
+    }
+
     async ciudad( lugar = ''){
         //Realizar HTTP Request
         try {
@@ -35,6 +43,29 @@ class Busquedas{
             console.log('UPS!');
             return []
             
+        }
+    }
+
+    async climaLugar(lat, lon){
+        try {
+            
+            const instance = axios.create({
+                baseURL: 'https://api.openweathermap.org/data/2.5/weather',
+                params:{...this.paramsOpenWeather, lon, lat}
+            })
+
+            const resp = await instance.get();
+            const {weather, main} = resp.data
+            const weatherResp = {
+                desc: weather[0].description,
+                min: main.temp_min,
+                max: main.temp_max,
+                temp: main.temp
+            }
+            
+            return  weatherResp
+        } catch (error) {
+            console.log('UPS Clima', error)
         }
     }
 }
