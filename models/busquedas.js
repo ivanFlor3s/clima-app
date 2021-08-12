@@ -6,16 +6,28 @@ class Busquedas{
     constructor(){
         //TODO: leer DB si existe
     }
+    get paramsMapbox(){
+        return {
+            'access_token': process.env.MAPBOX_KEY,
+            'limit': 5,
+            'language':'es'
+        }
+    }
 
     async ciudad( lugar = ''){
         //Realizar HTTP Request
         try {
             
-            console.log(lugar)
-            const resp = await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/MADRID.json?access_token=pk.eyJ1IjoiaXZhbmZsb3Jlczk2IiwiYSI6ImNrczg4bTEzZjF0bHMycW5qYmR1OWo1M3AifQ.iCGH51O4b8kOnOOY0w4QnQ&limit=5&language=es')
+            const instance = axios.create({
+                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ lugar }.json`,
+                params: this.paramsMapbox
+            })
+            
+            const resp = await instance.get()
             console.log(resp.data)
             return [] // retornar las ciudades que conincidan con el input
         } catch (error) {
+            console.log('UPS!');
             return []
             
         }

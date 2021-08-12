@@ -1,6 +1,8 @@
 require('colors')
+require('dotenv').config();
 const {leerInput, inquiererMenu, pausa} = require('./helpers/inquirer');
 const Busquedas = require('./models/busquedas');
+
 
 const main = async() => {
     let opt;
