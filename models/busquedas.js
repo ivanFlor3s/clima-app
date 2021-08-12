@@ -24,8 +24,13 @@ class Busquedas{
             })
             
             const resp = await instance.get()
-            console.log(resp.data)
-            return [] // retornar las ciudades que conincidan con el input
+            return resp.data.features.map( lugar => ({
+                id: lugar.id,
+                nombre: lugar.place_name,
+                lng: lugar.center[0] ,
+                lat: lugar.center[1]
+            })
+            )
         } catch (error) {
             console.log('UPS!');
             return []
