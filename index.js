@@ -12,6 +12,8 @@ const main = async() => {
         switch(opt){
             case 1 :
                 const lugar = await leerInput('Ingrese la Ciudad: ')
+
+                await BUSQUEDAS.ciudad(lugar)
                 console.log('\nInformacion de la ciudad\n'.green)
                 console.log('Ciudad: ')
                 console.log('Lat: ')
